@@ -25,3 +25,9 @@ Veriler **TheMealDB API** üzerinden çekilmekte ve **Redux Toolkit + Axios** il
 ```bash
 
 git clone https://github.com/kullaniciadi/food-landing-page.git
+
+cd food-landing-page
+
+npm install
+
+npm run dev
