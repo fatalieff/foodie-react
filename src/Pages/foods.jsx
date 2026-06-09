@@ -35,7 +35,9 @@ const Foods = () => {
   if (error) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
-        <div className="text-[#F03328] text-5xl mb-4">⚠️</div>
+        <div className="text-[#F03328] text-5xl mb-4">
+          <i className="fa-solid fa-circle-exclamation"></i>
+        </div>
         <h2 className="text-2xl font-bold nunito mb-2 text-[#2D2D2D]">Something went wrong</h2>
         <p className="text-[#666666] mb-6">{error}</p>
         <button 

@@ -35,8 +35,9 @@ function BestSellerSection() {
   return (
     <div className="relative z-[1] mt-12 sm:mt-16 lg:mt-[10%]">
       <h1 className="text-2xl sm:text-4xl lg:text-[55px] font-bold nunito text-center px-4 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent">
-        Our best Seller Dishes 🔥
+        Our Best Seller Dishes
       </h1>
+      <div className="w-20 h-1 bg-[#F03328] mx-auto mt-2 mb-4 rounded-full"></div>
       <p className="text-base sm:text-lg lg:text-[25px] font-medium text-[#5C5C5C] text-center mt-3 sm:mt-4 px-4 max-w-3xl mx-auto">
         Our fresh garden salad is a light and refreshing option. It features a mix of
         crisp lettuce, juicy tomatoe all tossed in your choice of dressing.
