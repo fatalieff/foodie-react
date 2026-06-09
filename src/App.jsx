@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import ContactUs from "./Pages/contact-us";
 import AboutUs from "./Pages/aboutUs";
 import Foods from "./Pages/foods";
+import OurMenu from "./Pages/ourMenu";
 import Users from "./Pages/Users";
 import UserDetail from "./Pages/UserDetail";
 
