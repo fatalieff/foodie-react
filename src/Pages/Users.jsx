@@ -1,82 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to fetch users');
-        return response.json();
-      })
-      .then(data => {
-        setUsers(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <div className="w-16 h-16 border-4 border-[#F03328] border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="nunito text-xl font-medium text-[#666666] animate-pulse">
-          Loading users...
-        </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
-        <div className="text-[#F03328] text-5xl mb-4">⚠️</div>
-        <h2 className="text-2xl font-bold nunito mb-2 text-[#2D2D2D]">Something went wrong</h2>
-        <p className="text-[#666666] mb-6">{error}</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="py-12 sm:py-16 lg:py-20">
-      <div className="text-center mb-12 sm:mb-16">
-        <span className="text-[#F03328] font-bold tracking-widest uppercase text-xs mb-3 block">
-          Our Team
-        </span>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-nunito mb-6 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent">
-          Meet Our <span className="text-[#F03328]">Community</span>
-        </h1>
-        <p className="text-[#666666] text-base sm:text-lg max-w-2xl mx-auto px-4 leading-relaxed font-nunito">
-          Connecting people through the love of food. Our vibrant community of food enthusiasts and chefs.
-        </p>
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 text-center">
+      {/* Icon / Illustration Placeholder */}
+      <div className="relative mb-8">
+        <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-[#fff5ee] to-[#ffe8d6] rounded-full flex items-center justify-center text-[#F03328] shadow-xl shadow-red-100/50">
+          <i className="fa-solid fa-users-rectangle text-5xl sm:text-6xl animate-pulse"></i>
+        </div>
+        <div className="absolute -top-2 -right-2 bg-[#FF9E0C] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+          New
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
-        {users.map((user, index) => (
-          <NavLink 
-            to={`/users/${user.id}`} 
-            key={user.id}
-            className="group bg-white rounded-3xl border border-[#f0e6de] p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(240,51,40,0.1)] text-center"
-          >
-            <div className="w-20 h-20 bg-gradient-to-br from-[#fff5ee] to-[#ffe8d6] rounded-full mx-auto mb-4 flex items-center justify-center text-[#F03328] text-2xl font-bold border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-500 font-nunito">
-              {user.name.charAt(0)}
-            </div>
-            <h3 className="text-lg font-bold font-nunito text-[#2D2D2D] mb-1 group-hover:text-[#F03328] transition-colors">
-              {user.name}
-            </h3>
-            <p className="text-[#666666] text-xs mb-4 font-nunito">{user.email}</p>
-            <span className="inline-block text-[#F03328] text-xs font-bold border-b border-transparent group-hover:border-[#F03328] transition-all font-nunito">
-              View Profile
-            </span>
-          </NavLink>
-        ))}
+      {/* Text Content */}
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold nunito mb-6 text-[#2D2D2D]">
+        Community <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F03328] to-[#FF9E0C]">Coming Soon</span>
+      </h1>
+      
+      <p className="text-[#666666] text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed font-light mb-10 nunito">
+        We're building a vibrant social space for food lovers! Soon you'll be able to share your 
+        favorite recipes, post food photos, and connect with other foodies in our community.
+      </p>
+
+      {/* Features Preview */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 w-full max-w-3xl">
+        <div className="p-4 rounded-2xl border border-[#f0e6de] bg-white/50">
+          <i className="fa-solid fa-camera-retro text-[#F03328] mb-3 block text-xl"></i>
+          <span className="text-sm font-bold text-[#2D2D2D] nunito">Share Photos</span>
+        </div>
+        <div className="p-4 rounded-2xl border border-[#f0e6de] bg-white/50">
+          <i className="fa-solid fa-utensils text-[#FF9E0C] mb-3 block text-xl"></i>
+          <span className="text-sm font-bold text-[#2D2D2D] nunito">Post Recipes</span>
+        </div>
+        <div className="p-4 rounded-2xl border border-[#f0e6de] bg-white/50">
+          <i className="fa-solid fa-comments text-[#F03328] mb-3 block text-xl"></i>
+          <span className="text-sm font-bold text-[#2D2D2D] nunito">Comment & Like</span>
+        </div>
       </div>
+
+      <NavLink 
+        to="/home" 
+        className="bg-gradient-to-r from-[#F03328] to-[#FF9E0C] text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-red-200 hover:scale-105 transition-transform duration-300"
+      >
+        Back to Home
+      </NavLink>
     </div>
   );
 };

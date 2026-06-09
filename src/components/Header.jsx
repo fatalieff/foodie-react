@@ -3,10 +3,10 @@ import Logo from "../assets/images/Frame 2.png";
 import { NavLink } from "react-router-dom";
 
 const navLinks = [
-  { to: "/home", label: "Home" },
+ { to: "/home", label: "Home" },
   { to: "/Our-menu", label: "Our Menu" },
   { to: "/Foods", label: "Foods" },
-  { to: "/users", label: "Community" },
+  { to: "/users", label: "Coming Soon" },
   { to: "/About-Us", label: "About Us" },
   { to: "/Contact-Us", label: "Contact Us" },
 ];

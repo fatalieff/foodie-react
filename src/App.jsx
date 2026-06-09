@@ -8,7 +8,6 @@ import AboutUs from "./Pages/aboutUs";
 import Foods from "./Pages/foods";
 import OurMenu from "./Pages/ourMenu";
 import Users from "./Pages/Users";
-import UserDetail from "./Pages/UserDetail";
 
 function App() {
   return (
@@ -23,8 +22,7 @@ function App() {
           <Route path="/About-Us" element={<AboutUs />} />
           <Route path="/Foods" element={<Foods/>}/>
           <Route path="/Our-menu" element={<OurMenu/>}/>
-          <Route path="/users" element={<Users/>}/>
-          <Route path="/users/:id" element={<UserDetail/>}/>
+          <Route path="/users" element={<Users />} />
         </Routes>
         <Footer />
       </BrowserRouter>
