@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoods } from "../store/foodSlice";
+
+const buyNowClass =
+  "inline-block text-white text-sm sm:text-base font-medium bg-[#F03328] rounded-[38px] py-2 sm:py-2.5 px-4 sm:px-5 cursor-pointer shrink-0 whitespace-nowrap shadow-[0_4px_14px_rgba(240,51,40,0.3)] transition-all hover:scale-105 hover:shadow-[0_6px_20px_rgba(240,51,40,0.4)] w-full sm:w-auto text-center";
 
 function BestSellerSection() {
   const dispatch = useDispatch();
@@ -55,9 +59,9 @@ function BestSellerSection() {
                 <span className="text-lg sm:text-xl lg:text-2xl nunito font-medium text-[#2D2D2D] line-clamp-2 min-w-0">
                   {item.strMeal}
                 </span>
-                <button className="text-white text-sm sm:text-base font-medium bg-[#F03328] rounded-[38px] py-2 sm:py-2.5 px-4 sm:px-5 cursor-pointer shrink-0 whitespace-nowrap shadow-[0_4px_14px_rgba(240,51,40,0.3)] transition-all hover:scale-105 hover:shadow-[0_6px_20px_rgba(240,51,40,0.4)] w-full sm:w-auto text-center">
+                <NavLink to="/Foods" className={buyNowClass}>
                   Buy Now
-                </button>
+                </NavLink>
               </div>
               <div className="flex justify-between items-center gap-2 mt-auto">
                 <span className="text-sm sm:text-lg nunito font-semibold text-[#666666] truncate">
