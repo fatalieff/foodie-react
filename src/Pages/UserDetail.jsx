@@ -52,78 +52,78 @@ const UserDetail = () => {
   }
 
   return (
-    <div className="py-12 sm:py-16 lg:py-20 max-w-4xl mx-auto px-4">
+    <div className="py-12 sm:py-16 lg:py-20 max-w-4xl mx-auto px-4 font-nunito">
       <button 
         onClick={() => navigate(-1)}
-        className="mb-8 flex items-center gap-2 text-[#666666] hover:text-[#F03328] transition-colors font-medium"
+        className="mb-8 flex items-center gap-2 text-[#666666] hover:text-[#F03328] transition-colors font-semibold text-sm"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
         </svg>
         Back
       </button>
 
-      <div className="bg-white rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-[#f0e6de] overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-[#FF9E0C] to-[#F03328]"></div>
-        <div className="px-8 pb-12">
-          <div className="relative -mt-16 mb-6">
-            <div className="w-32 h-32 bg-white rounded-full p-1 shadow-lg">
-              <div className="w-full h-full bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] rounded-full flex items-center justify-center text-[#F03328] text-5xl font-bold">
+      <div className="bg-white rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-[#f0e6de] overflow-hidden">
+        <div className="h-24 bg-gradient-to-r from-[#FF9E0C] to-[#F03328]"></div>
+        <div className="px-8 pb-10">
+          <div className="relative -mt-12 mb-6">
+            <div className="w-24 h-24 bg-white rounded-full p-1 shadow-md">
+              <div className="w-full h-full bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] rounded-full flex items-center justify-center text-[#F03328] text-4xl font-bold">
                 {user.name.charAt(0)}
               </div>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <h1 className="text-3xl font-bold nunito text-[#2D2D2D] mb-2">{user.name}</h1>
-              <p className="text-[#F03328] font-semibold mb-6">@{user.username}</p>
+              <h1 className="text-2xl font-bold text-[#2D2D2D] mb-1">{user.name}</h1>
+              <p className="text-[#F03328] font-semibold mb-6 text-sm">@{user.username}</p>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-[#666666]">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#F03328]">
+                  <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-[#F03328] text-sm">
                     <i className="fa-solid fa-envelope"></i>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wider font-bold opacity-50">Email</p>
-                    <p className="font-medium">{user.email}</p>
+                    <p className="text-[10px] uppercase tracking-wider font-bold opacity-50">Email</p>
+                    <p className="font-medium text-sm">{user.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-[#666666]">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#F03328]">
+                  <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-[#F03328] text-sm">
                     <i className="fa-solid fa-phone"></i>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wider font-bold opacity-50">Phone</p>
-                    <p className="font-medium">{user.phone}</p>
+                    <p className="text-[10px] uppercase tracking-wider font-bold opacity-50">Phone</p>
+                    <p className="font-medium text-sm">{user.phone}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-[#666666]">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#F03328]">
+                  <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-[#F03328] text-sm">
                     <i className="fa-solid fa-globe"></i>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wider font-bold opacity-50">Website</p>
-                    <p className="font-medium">{user.website}</p>
+                    <p className="text-[10px] uppercase tracking-wider font-bold opacity-50">Website</p>
+                    <p className="font-medium text-sm">{user.website}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100">
-                <h4 className="font-bold nunito text-[#2D2D2D] mb-4 flex items-center gap-2">
-                  <i className="fa-solid fa-building text-[#F03328]"></i> Company
+            <div className="space-y-6">
+              <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                <h4 className="font-bold text-[#2D2D2D] mb-3 flex items-center gap-2 text-sm">
+                  <i className="fa-solid fa-building text-[#F03328]"></i> COMPANY
                 </h4>
-                <p className="text-xl font-semibold text-[#2D2D2D] mb-1">{user.company.name}</p>
-                <p className="text-sm text-[#666666] italic">"{user.company.catchPhrase}"</p>
+                <p className="text-lg font-semibold text-[#2D2D2D] mb-1">{user.company.name}</p>
+                <p className="text-xs text-[#666666] italic">"{user.company.catchPhrase}"</p>
               </div>
 
-              <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100">
-                <h4 className="font-bold nunito text-[#2D2D2D] mb-4 flex items-center gap-2">
-                  <i className="fa-solid fa-location-dot text-[#F03328]"></i> Address
+              <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                <h4 className="font-bold text-[#2D2D2D] mb-3 flex items-center gap-2 text-sm">
+                  <i className="fa-solid fa-location-dot text-[#F03328]"></i> ADDRESS
                 </h4>
-                <p className="text-[#666666]">
+                <p className="text-sm text-[#666666] leading-relaxed">
                   {user.address.street}, {user.address.suite}<br />
                   {user.address.city}, {user.address.zipcode}
                 </p>

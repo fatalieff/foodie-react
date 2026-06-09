@@ -46,13 +46,13 @@ const Users = () => {
   return (
     <div className="py-12 sm:py-16 lg:py-20">
       <div className="text-center mb-12 sm:mb-16">
-        <span className="text-[#F03328] font-bold tracking-widest uppercase text-sm mb-3 block">
+        <span className="text-[#F03328] font-bold tracking-widest uppercase text-xs mb-3 block">
           Our Team
         </span>
-        <h1 className="text-3xl sm:text-5xl lg:text-[60px] font-bold nunito mb-6 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-nunito mb-6 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent">
           Meet Our <span className="text-[#F03328]">Community</span>
         </h1>
-        <p className="text-[#666666] text-lg max-w-2xl mx-auto px-4 leading-relaxed">
+        <p className="text-[#666666] text-base sm:text-lg max-w-2xl mx-auto px-4 leading-relaxed font-nunito">
           Connecting people through the love of food. Our vibrant community of food enthusiasts and chefs.
         </p>
       </div>
@@ -64,14 +64,14 @@ const Users = () => {
             key={user.id}
             className="group bg-white rounded-3xl border border-[#f0e6de] p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(240,51,40,0.1)] text-center"
           >
-            <div className="w-24 h-24 bg-gradient-to-br from-[#fff5ee] to-[#ffe8d6] rounded-full mx-auto mb-4 flex items-center justify-center text-[#F03328] text-3xl font-bold border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-500">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#fff5ee] to-[#ffe8d6] rounded-full mx-auto mb-4 flex items-center justify-center text-[#F03328] text-2xl font-bold border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-500 font-nunito">
               {user.name.charAt(0)}
             </div>
-            <h3 className="text-xl font-bold nunito text-[#2D2D2D] mb-1 group-hover:text-[#F03328] transition-colors">
+            <h3 className="text-lg font-bold font-nunito text-[#2D2D2D] mb-1 group-hover:text-[#F03328] transition-colors">
               {user.name}
-            </h4>
-            <p className="text-[#666666] text-sm mb-4">{user.email}</p>
-            <span className="inline-block text-[#F03328] text-sm font-bold border-b border-transparent group-hover:border-[#F03328] transition-all">
+            </h3>
+            <p className="text-[#666666] text-xs mb-4 font-nunito">{user.email}</p>
+            <span className="inline-block text-[#F03328] text-xs font-bold border-b border-transparent group-hover:border-[#F03328] transition-all font-nunito">
               View Profile
             </span>
           </NavLink>

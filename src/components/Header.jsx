@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 const navLinkClass = ({ isActive }) =>
-  `relative nunito text-base lg:text-[20px] font-medium transition-colors after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:rounded-sm after:bg-gradient-to-r after:from-[#F03328] after:to-[#FF9E0C] after:transition-all ${
+  `relative font-nunito text-sm lg:text-base font-medium transition-colors after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:rounded-sm after:bg-gradient-to-r after:from-[#F03328] after:to-[#FF9E0C] after:transition-all ${
     isActive
       ? "text-[#F03328] after:w-full"
       : "text-[#3A3A3A] after:w-0 hover:text-[#F03328] hover:after:w-full"
@@ -24,19 +24,19 @@ function Header() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-[1100] mt-1 bg-[rgba(255,253,251,0.92)] backdrop-blur-md border-b border-[#f0e6de] rounded-b-2xl lg:rounded-b-3xl px-4 py-3 sm:px-6 -mx-4 sm:-mx-5">
+    <header className="sticky top-0 z-[1100] mt-1 bg-[rgba(255,253,251,0.92)] backdrop-blur-md border-b border-[#f0e6de] rounded-b-2xl lg:rounded-b-3xl px-4 py-2 sm:px-6 -mx-4 sm:-mx-5">
       <div className="flex justify-between items-center gap-4">
-        <NavLink to="/home" className="flex gap-3 sm:gap-5 items-center shrink-0" onClick={closeMenu}>
-          <div className="w-9 h-9 sm:w-11 sm:h-11">
+        <NavLink to="/home" className="flex gap-2 sm:gap-3 items-center shrink-0" onClick={closeMenu}>
+          <div className="w-7 h-7 sm:w-9 sm:h-9">
             <img src={Logo} alt="Foodie logo" className="w-full h-full" />
           </div>
-          <div>
-            <span className="font-bold nunito text-2xl sm:text-3xl lg:text-[40px] text-[#F03328]">Foo</span>
-            <span className="font-bold nunito text-2xl sm:text-3xl lg:text-[40px] text-[#FF9E0C]">die</span>
+          <div className="flex">
+            <span className="font-bold font-nunito text-xl sm:text-2xl lg:text-[28px] text-[#F03328]">Foo</span>
+            <span className="font-bold font-nunito text-xl sm:text-2xl lg:text-[28px] text-[#FF9E0C]">die</span>
           </div>
         </NavLink>
 
-        <nav className="hidden lg:flex gap-8 xl:gap-[71px]">
+        <nav className="hidden lg:flex gap-6 xl:gap-12">
           {navLinks.map((link) => (
             <NavLink key={link.to} to={link.to} className={navLinkClass}>
               {link.label}
@@ -45,8 +45,8 @@ function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button className="hidden sm:flex group border-2 border-[#F03328] rounded-[38px] px-6 lg:px-[43px] py-2.5 lg:py-[17px] cursor-pointer bg-transparent transition-all duration-300 hover:bg-gradient-to-br hover:from-[#F03328] hover:to-[#FF9E0C] hover:border-transparent hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(240,51,40,0.25)]">
-            <span className="text-[#F03328] text-base lg:text-[20px] font-extrabold nunito transition-colors group-hover:text-white">
+          <button className="hidden sm:flex group border-2 border-[#F03328] rounded-[38px] px-5 lg:px-8 py-1.5 lg:py-2 cursor-pointer bg-transparent transition-all duration-300 hover:bg-gradient-to-br hover:from-[#F03328] hover:to-[#FF9E0C] hover:border-transparent hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(240,51,40,0.25)]">
+            <span className="text-[#F03328] text-sm lg:text-base font-bold font-nunito transition-colors group-hover:text-white">
               Login
             </span>
           </button>
