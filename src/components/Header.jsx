@@ -79,6 +79,7 @@ function Header() {
         <div className="flex items-center gap-3">
           {/* Basket Icon */}
           <button 
+            id="cart-icon"
             onClick={() => dispatch(toggleCart())}
             className="relative p-2 rounded-xl hover:bg-[#fff5ee] transition-all duration-300 border border-transparent hover:border-[#f0e6de] group"
           >

@@ -33,6 +33,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@keyframes flyToCart {
+  0% {
+    left: var(--start-x);
+    top: var(--start-y);
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    left: var(--target-x);
+    top: var(--target-y);
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+.animate-fly {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(240, 51, 40, 0.3);
+  border: 2px solid white;
+  animation: flyToCart 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
 ::selection {
   background: rgba(255, 158, 12, 0.25);
   color: var(--color-text);

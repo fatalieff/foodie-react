@@ -10,10 +10,37 @@ const Foods = () => {
   const { items, loading, error } = useSelector((state) => state.foods);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [animations, setAnimations] = useState([]);
 
   useEffect(() => {
     dispatch(fetchFoods());
   }, [dispatch]);
+
+  const handleAddToCart = (e, food) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const cart = document.getElementById('cart-icon');
+    
+    if (cart) {
+      const cartRect = cart.getBoundingClientRect();
+      const animationId = Date.now();
+      
+      const newAnimation = {
+        id: animationId,
+        startPos: { x: rect.left, y: rect.top },
+        endPos: { x: cartRect.left, y: cartRect.top },
+        image: food.strMealThumb
+      };
+
+      setAnimations(prev => [...prev, newAnimation]);
+
+      setTimeout(() => {
+        setAnimations(prev => prev.filter(anim => anim.id !== animationId));
+      }, 800);
+    }
+
+    dispatch(addToCart(food));
+  };
 
   const categories = ['All', ...new Set(items?.map(item => item.strCategory) || [])];
   
@@ -164,7 +191,7 @@ const Foods = () => {
                     <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
                   </div>
                   <button 
-                    onClick={() => dispatch(addToCart(food))}
+                    onClick={(e) => handleAddToCart(e, food)}
                     className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -184,6 +211,22 @@ const Foods = () => {
           <p className="text-xl text-[#666666] nunito">No meals found in this category.</p>
         </div>
       )}
+
+      {/* Flying Animation Elements */}
+      {animations.map(anim => (
+        <img
+          key={anim.id}
+          src={anim.image}
+          className="animate-fly"
+          style={{
+            '--start-x': `${anim.startPos.x}px`,
+            '--start-y': `${anim.startPos.y}px`,
+            '--target-x': `${anim.endPos.x}px`,
+            '--target-y': `${anim.endPos.y}px`,
+          }}
+          alt=""
+        />
+      ))}
     </div>
   );
 };
