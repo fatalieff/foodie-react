@@ -11,6 +11,7 @@ import OurMenu from "./Pages/ourMenu";
 import Users from "./Pages/Users";
 import LoginPage from "./Pages/loginPage";
 import RegisterPage from "./Pages/registerPage";
+import CommunityFeed from "./Pages/CommunityFeed";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="/About-Us" element={<AboutUs />} />
           <Route path="/Foods" element={<Foods/>}/>
           <Route path="/Our-menu" element={<OurMenu/>}/>
-          <Route path="/Community" element={<Users />} />
+          <Route path="/Community" element={<CommunityFeed />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
