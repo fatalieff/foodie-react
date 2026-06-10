@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Logo from "../assets/images/Frame 2.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleCart } from "../store/cartSlice";
 
 const navLinks = [
   { to: "/home", label: "Home" },
@@ -24,6 +26,10 @@ function Header() {
   const [user, setUser] = useState(null);
   const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
     // Get initial session
@@ -71,6 +77,19 @@ function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Basket Icon */}
+          <button 
+            onClick={() => dispatch(toggleCart())}
+            className="relative p-2 rounded-xl hover:bg-[#fff5ee] transition-all duration-300 border border-transparent hover:border-[#f0e6de] group"
+          >
+            <i className="fa-solid fa-basket-shopping text-xl text-[#2d2d2d] group-hover:text-[#F03328] transition-colors" />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#F03328] text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white animate-in zoom-in duration-300">
+                {totalItems}
+              </span>
+            )}
+          </button>
+
           {user ? (
             <div className="relative">
               <button

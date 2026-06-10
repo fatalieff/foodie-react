@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoods } from '../store/foodSlice';
+import { addToCart } from '../store/cartSlice';
 import { NavLink } from 'react-router-dom';
 import { FoodCardSkeleton } from '../components/Skeletons';
 
@@ -162,7 +163,10 @@ const Foods = () => {
                     <span className="text-xs text-[#999] uppercase font-bold tracking-wider">Price</span>
                     <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
                   </div>
-                  <button className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn">
+                  <button 
+                    onClick={() => dispatch(addToCart(food))}
+                    className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn"
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
