@@ -153,7 +153,7 @@ const Foods = () => {
               <div className="flex items-center justify-between mt-auto">
                 <div className="flex flex-col">
                   <span className="text-xs text-[#999] uppercase font-bold tracking-wider">Price</span>
-                  <span className="text-2xl font-bold text-[#F03328]">$25.00</span>
+                  <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
                 </div>
                 <button className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

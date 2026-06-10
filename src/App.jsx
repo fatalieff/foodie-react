@@ -8,6 +8,8 @@ import AboutUs from "./Pages/aboutUs";
 import Foods from "./Pages/foods";
 import OurMenu from "./Pages/ourMenu";
 import Users from "./Pages/Users";
+import LoginPage from "./Pages/loginPage";
+import RegisterPage from "./Pages/registerPage";
 
 function App() {
   return (
@@ -22,7 +24,9 @@ function App() {
           <Route path="/About-Us" element={<AboutUs />} />
           <Route path="/Foods" element={<Foods/>}/>
           <Route path="/Our-menu" element={<OurMenu/>}/>
-          <Route path="/users" element={<Users />} />
+          <Route path="/Community" element={<Users />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -46,7 +46,7 @@ const OurMenu = () => {
                   {food.strMeal}
                 </h4>
                 <div className="flex-1 border-b border-dotted border-gray-300 mb-1 hidden sm:block"></div>
-                <span className="text-xl font-bold text-[#2D2D2D] group-hover:text-[#F03328] transition-colors">$24.00</span>
+                <span className="text-xl font-bold text-[#2D2D2D] group-hover:text-[#F03328] transition-colors">${food.price}</span>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-sm text-[#888] italic font-light truncate">

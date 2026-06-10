@@ -22,7 +22,11 @@ const foodSlice = createSlice({
       })
       .addCase(fetchFoods.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        // Add a price property to each item since the API doesn't provide one
+        state.items = action.payload?.map(item => ({
+          ...item,
+          price: (parseFloat((parseInt(item.idMeal) % 50) + 10.99)).toFixed(2)
+        })) || [];
       })
       .addCase(fetchFoods.rejected, (state, action) => {
         state.loading = false;

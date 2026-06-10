@@ -69,7 +69,7 @@ function BestSellerSection() {
                   Cuisine : {item.strArea}
                 </span>
                 <span className="font-bold text-lg sm:text-xl lg:text-2xl text-[#F03328] shrink-0">
-                  $23.00
+                  ${item.price}
                 </span>
               </div>
             </div>
