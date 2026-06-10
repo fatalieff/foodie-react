@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoods } from '../store/foodSlice';
+import { MenuItemSkeleton } from '../components/Skeletons';
 
 const OurMenu = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const OurMenu = () => {
     if (items.length === 0) dispatch(fetchFoods());
   }, [dispatch, items]);
 
-  if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading Menu...</div>;
+  // if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading Menu...</div>;
 
   // API verilerini kategorilere ayırıp ilk 4'er tanesini alıyoruz
   const beefDishes = items?.filter(item => item.strCategory === 'Beef').slice(0, 4);
@@ -29,34 +30,40 @@ const OurMenu = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
-        {dishes?.map(food => (
-          <div key={food.idMeal} className="group flex items-center gap-6 p-4 rounded-3xl hover:bg-white hover:shadow-2xl hover:shadow-red-100/50 transition-all duration-500 border border-transparent hover:border-red-50">
-            {/* Food Image */}
-            <div className="w-24 h-24 sm:w-28 sm:h-28 shrink-0 overflow-hidden rounded-2xl shadow-md group-hover:rotate-3 transition-transform duration-500">
-              <img 
-                src={food.strMealThumb} 
-                alt={food.strMeal} 
-                className="w-full h-full object-cover"
-              />
-            </div>
+        {loading ? (
+          Array.from({ length: 4 }).map((_, index) => (
+            <MenuItemSkeleton key={index} />
+          ))
+        ) : (
+          dishes?.map(food => (
+            <div key={food.idMeal} className="group flex items-center gap-6 p-4 rounded-3xl hover:bg-white hover:shadow-2xl hover:shadow-red-100/50 transition-all duration-500 border border-transparent hover:border-red-50">
+              {/* Food Image */}
+              <div className="w-24 h-24 sm:w-28 sm:h-28 shrink-0 overflow-hidden rounded-2xl shadow-md group-hover:rotate-3 transition-transform duration-500">
+                <img 
+                  src={food.strMealThumb} 
+                  alt={food.strMeal} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <h4 className="text-lg font-bold nunito text-[#2D2D2D] group-hover:text-[#F03328] transition-colors duration-300 truncate">
-                  {food.strMeal}
-                </h4>
-                <div className="flex-1 border-b border-dotted border-gray-300 mb-1 hidden sm:block"></div>
-                <span className="text-xl font-bold text-[#2D2D2D] group-hover:text-[#F03328] transition-colors">${food.price}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-sm text-[#888] italic font-light truncate">
-                  Premium {food.strCategory.toLowerCase()} selection
-                </p>
-                <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider bg-green-50 px-2 py-0.5 rounded">Organic</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <h4 className="text-lg font-bold nunito text-[#2D2D2D] group-hover:text-[#F03328] transition-colors duration-300 truncate">
+                    {food.strMeal}
+                  </h4>
+                  <div className="flex-1 border-b border-dotted border-gray-300 mb-1 hidden sm:block"></div>
+                  <span className="text-xl font-bold text-[#2D2D2D] group-hover:text-[#F03328] transition-colors">${food.price}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm text-[#888] italic font-light truncate">
+                    Premium {food.strCategory.toLowerCase()} selection
+                  </p>
+                  <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider bg-green-50 px-2 py-0.5 rounded">Organic</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

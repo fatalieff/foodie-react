@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoods } from '../store/foodSlice';
 import { NavLink } from 'react-router-dom';
+import { FoodCardSkeleton } from '../components/Skeletons';
 
 const Foods = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Foods = () => {
     const matchesSearch = item.strMeal.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
+/* 
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
@@ -31,7 +32,7 @@ const Foods = () => {
       </div>
     );
   }
-
+*/
   if (error) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
@@ -114,56 +115,63 @@ const Foods = () => {
 
       {/* Food Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
-        {filteredItems && filteredItems.map((food, index) => (
-          <div 
-            key={food.idMeal}
-            className="group bg-white rounded-3xl border border-[#f0e6de] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(240,51,40,0.1)]"
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            {/* Image Container */}
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <img 
-                src={food.strMealThumb} 
-                alt={food.strMeal} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute top-4 left-4">
-                <span className="bg-white/90 backdrop-blur-sm text-[#F03328] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
-                  {food.strCategory}
-                </span>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                 <NavLink 
-                  to={`/Foods`} 
-                  className="w-full bg-white text-[#2D2D2D] py-3 rounded-xl font-bold text-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500 hover:bg-[#F03328] hover:text-white"
-                >
-                  View Details
-                </NavLink>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold nunito text-[#2D2D2D] line-clamp-1 group-hover:text-[#F03328] transition-colors">
-                  {food.strMeal}
-                </h3>
-              </div>
-              
-              <div className="flex items-center justify-between mt-auto">
-                <div className="flex flex-col">
-                  <span className="text-xs text-[#999] uppercase font-bold tracking-wider">Price</span>
-                  <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
+        {loading ? (
+          // Skeleton Loading State
+          Array.from({ length: 8 }).map((_, index) => (
+            <FoodCardSkeleton key={index} />
+          ))
+        ) : (
+          filteredItems && filteredItems.map((food, index) => (
+            <div 
+              key={food.idMeal}
+              className="group bg-white rounded-3xl border border-[#f0e6de] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(240,51,40,0.1)]"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              {/* Image Container */}
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img 
+                  src={food.strMealThumb} 
+                  alt={food.strMeal} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute top-4 left-4">
+                  <span className="bg-white/90 backdrop-blur-sm text-[#F03328] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                    {food.strCategory}
+                  </span>
                 </div>
-                <button className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                </button>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                   <NavLink 
+                    to={`/Foods`} 
+                    className="w-full bg-white text-[#2D2D2D] py-3 rounded-xl font-bold text-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500 hover:bg-[#F03328] hover:text-white"
+                  >
+                    View Details
+                  </NavLink>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold nunito text-[#2D2D2D] line-clamp-1 group-hover:text-[#F03328] transition-colors">
+                    {food.strMeal}
+                  </h3>
+                </div>
+                
+                <div className="flex items-center justify-between mt-auto">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-[#999] uppercase font-bold tracking-wider">Price</span>
+                    <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
+                  </div>
+                  <button className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* Empty State */}
