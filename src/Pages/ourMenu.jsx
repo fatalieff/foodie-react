@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoods } from '../store/foodSlice';
 import { MenuItemSkeleton } from '../components/Skeletons';
@@ -18,25 +19,67 @@ const OurMenu = () => {
   const chickenDishes = items?.filter(item => item.strCategory === 'Chicken').slice(0, 4);
   const dessertDishes = items?.filter(item => item.strCategory === 'Dessert').slice(0, 4);
 
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
   const MenuSection = ({ title, icon, dishes }) => (
-    <div className="mb-20">
+    <motion.div 
+      className="mb-20"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7 }}
+    >
       <div className="flex items-center gap-4 mb-10">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F03328] to-[#FF9E0C] flex items-center justify-center text-white text-2xl shadow-lg shadow-red-200/50">
+        <motion.div 
+          initial={{ scale: 0, rotate: -10 }}
+          whileInView={{ scale: 1, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 200, damping: 12 }}
+          className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F03328] to-[#FF9E0C] flex items-center justify-center text-white text-2xl shadow-lg shadow-red-200/50"
+        >
           <i className={`fa-solid ${icon}`}></i>
-        </div>
+        </motion.div>
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold nunito text-[#2D2D2D] tracking-tight">{title}</h2>
           <div className="h-1 w-12 bg-[#F03328] mt-1 rounded-full"></div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+      >
         {loading ? (
           Array.from({ length: 4 }).map((_, index) => (
             <MenuItemSkeleton key={index} />
           ))
         ) : (
           dishes?.map(food => (
-            <div key={food.idMeal} className="group flex items-center gap-6 p-4 rounded-3xl hover:bg-white hover:shadow-2xl hover:shadow-red-100/50 transition-all duration-500 border border-transparent hover:border-red-50">
+            <motion.div 
+              key={food.idMeal} 
+              variants={itemVariants}
+              whileHover={{ 
+                scale: 1.02, 
+                y: -4, 
+                transition: { duration: 0.3 } 
+              }}
+              className="group flex items-center gap-6 p-4 rounded-3xl hover:bg-white hover:shadow-2xl hover:shadow-red-100/50 transition-all duration-500 border border-transparent hover:border-red-50"
+            >
               {/* Food Image */}
               <div className="w-24 h-24 sm:w-28 sm:h-28 shrink-0 overflow-hidden rounded-2xl shadow-md group-hover:rotate-3 transition-transform duration-500">
                 <img 
@@ -61,16 +104,22 @@ const OurMenu = () => {
                   <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider bg-green-50 px-2 py-0.5 rounded">Organic</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 
   return (
     <div className="py-12 sm:py-16 lg:py-24 px-4 max-w-6xl mx-auto">
-      <div className="text-center mb-20">
+      <motion.div 
+        className="text-center mb-20"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
         <span className="text-[#F03328] font-bold tracking-[0.2em] uppercase text-xs mb-4 block">
           Taste the Excellence
         </span>
@@ -82,7 +131,7 @@ const OurMenu = () => {
           Crafted with passion and the finest seasonal ingredients. 
           Experience a culinary journey like no other.
         </p>
-      </div>
+      </motion.div>
 
       <MenuSection title="Steaks & Beef" icon="fa-utensils" dishes={beefDishes} />
       <MenuSection title="Poultry & Chicken" icon="fa-drumstick-bite" dishes={chickenDishes} />

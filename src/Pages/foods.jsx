@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoods } from '../store/foodSlice';
 import { addToCart } from '../store/cartSlice';
@@ -49,18 +50,7 @@ const Foods = () => {
     const matchesSearch = item.strMeal.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-/* 
-  if (loading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <div className="w-16 h-16 border-4 border-[#F03328] border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="nunito text-xl font-medium text-[#666666] animate-pulse">
-          Preparing delicious meals for you...
-        </p>
-      </div>
-    );
-  }
-*/
+
   if (error) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
@@ -79,10 +69,31 @@ const Foods = () => {
     );
   }
 
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <div className="py-12 sm:py-16 lg:py-20">
       {/* Hero / Header Section */}
-      <div className="text-center mb-12 sm:mb-16">
+      <motion.div 
+        className="text-center mb-12 sm:mb-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
         <span className="text-[#F03328] font-bold tracking-widest uppercase text-sm mb-3 block">
           Our Menu
         </span>
@@ -93,10 +104,16 @@ const Foods = () => {
           From traditional classics to modern delights, explore our diverse menu 
           crafted with the finest ingredients and culinary passion.
         </p>
-      </div>
+      </motion.div>
 
       {/* Search & Category Filter Section */}
-      <div className="max-w-2xl mx-auto mb-12 px-4">
+      <motion.div 
+        className="max-w-2xl mx-auto mb-12 px-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         {/* Search Bar */}
         <div className="relative mb-6 group">
           <input
@@ -126,9 +143,13 @@ const Foods = () => {
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3">
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category}
               onClick={() => setSelectedCategory(category)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              layout
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border-2 ${
                 selectedCategory === category
                   ? 'bg-[#F03328] border-[#F03328] text-white shadow-[0_8px_20px_rgba(240,51,40,0.3)]'
@@ -136,13 +157,19 @@ const Foods = () => {
               }`}
             >
               {category}
-            </button>
+            </motion.button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Food Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
+      <motion.div 
+        key={filteredItems?.length || 0}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4"
+        variants={staggerContainer}
+        initial="hidden"
+        animate={loading ? "hidden" : "show"}
+      >
         {loading ? (
           // Skeleton Loading State
           Array.from({ length: 8 }).map((_, index) => (
@@ -150,8 +177,14 @@ const Foods = () => {
           ))
         ) : (
           filteredItems && filteredItems.map((food, index) => (
-            <div 
+            <motion.div 
               key={food.idMeal}
+              variants={cardVariants}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.03, 
+                transition: { duration: 0.3 } 
+              }}
               className="group bg-white rounded-3xl border border-[#f0e6de] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(240,51,40,0.1)]"
               style={{ animationDelay: `${index * 50}ms` }}
             >
@@ -190,20 +223,22 @@ const Foods = () => {
                     <span className="text-xs text-[#999] uppercase font-bold tracking-wider">Price</span>
                     <span className="text-2xl font-bold text-[#F03328]">${food.price}</span>
                   </div>
-                  <button 
+                  <motion.button 
                     onClick={(e) => handleAddToCart(e, food)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     className="bg-[#f0e6de] text-[#2D2D2D] p-3 rounded-2xl hover:bg-[#F03328] hover:text-white transition-all duration-300 group/btn"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
-      </div>
+      </motion.div>
 
       {/* Empty State */}
       {filteredItems?.length === 0 && (

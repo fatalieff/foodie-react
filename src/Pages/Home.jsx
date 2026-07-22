@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import DeliveryImg from "../assets/images/Frame 35.png";
 import VarietyOptionsImg from "../assets/images/Frame 35 (1).png";
 import BurgerImg from "../assets/images/Frame 35 (2).png";
@@ -43,34 +44,91 @@ const features = [
 ];
 
 function Home() {
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const fadeUpItem = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const scrollReveal = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  };
+
   return (
     <>
       <div className="pt-6 sm:pt-8 lg:pt-12">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
-          <div className="w-full lg:w-1/2 text-center lg:text-left">
-            <h1 className="font-nunito text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#2D2D2D]">
+          <motion.div 
+            className="w-full lg:w-1/2 text-center lg:text-left"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.h1 
+              variants={fadeUpItem}
+              className="font-nunito text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#2D2D2D]"
+            >
               Desire{" "}
               <span className="inline-block bg-gradient-to-r from-[#FF9E0C] to-[#D58000] text-white px-3 sm:px-4 py-1 rounded-full -rotate-[11deg] shadow-[0_6px_20px_rgba(213,128,0,0.35)] text-2xl sm:text-3xl lg:text-5xl">
                 Food
               </span>
               <br />
               for Your Taste
-            </h1>
-            <p className="font-nunito text-base sm:text-lg lg:text-xl text-[#666666] leading-relaxed mt-3 sm:mt-4 max-w-xl mx-auto lg:mx-0">
+            </motion.h1>
+            <motion.p 
+              variants={fadeUpItem}
+              className="font-nunito text-base sm:text-lg lg:text-xl text-[#666666] leading-relaxed mt-3 sm:mt-4 max-w-xl mx-auto lg:mx-0"
+            >
               Food is what we eat to stay alive and healthy. It comes in many
               different forms and flavors, from fruits and vegetables to meats
               and grains.
-            </p>
-          </div>
-          <div className="relative w-full lg:w-1/2 max-w-md lg:max-w-none mx-auto">
+            </motion.p>
+          </motion.div>
+          <motion.div 
+            className="relative w-full lg:w-1/2 max-w-md lg:max-w-none mx-auto"
+            variants={fadeUpItem}
+            initial="hidden"
+            animate="show"
+          >
             <div className="absolute inset-[10%_-5%_-5%_15%] rounded-full bg-[radial-gradient(circle,rgba(255,158,12,0.15)_0%,transparent_70%)] -z-10" />
-            <img src={mainImg} alt="" className="w-full h-auto drop-shadow-lg" />
-          </div>
+            <motion.img 
+                  src={mainImg} 
+                  alt="" 
+                  className="w-full h-auto drop-shadow-lg"
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+          </motion.div>
         </div>
 
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8 sm:mt-12 lg:mt-16">
+        <motion.div 
+          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8 sm:mt-12 lg:mt-16"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {services.map((item, i) => (
-            <div key={i} className={serviceCardClass}>
+            <motion.div 
+              key={i} 
+              className={serviceCardClass}
+              variants={scrollReveal}
+              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+            >
               <div className={iconWrapClass}>
                 <img src={item.img} alt="" className="w-full h-full" />
               </div>
@@ -85,26 +143,42 @@ function Home() {
                   Learn More
                 </span>
               </NavLink>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      <div className="mt-12 sm:mt-16 lg:mt-24 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12 relative z-[1]">
-        <div className="w-full lg:w-1/2">
+      <motion.div 
+        className="mt-12 sm:mt-16 lg:mt-24 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12 relative z-[1]"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+      >
+        <motion.div className="w-full lg:w-1/2" variants={scrollReveal}>
           <img
             src={FoodImg}
             alt=""
             className="w-full max-w-lg mx-auto lg:max-w-none aspect-square object-cover rounded-2xl lg:rounded-[30px] shadow-[0_8px_32px_rgba(45,45,45,0.08)] transition-transform duration-400 hover:scale-[1.02]"
           />
-        </div>
-        <div className="w-full lg:w-1/2 min-h-0 flex flex-col justify-between gap-6">
+        </motion.div>
+        <motion.div 
+          className="w-full lg:w-1/2 min-h-0 flex flex-col justify-between gap-6"
+          variants={scrollReveal}
+        >
           <span className="font-nunito font-bold text-2xl sm:text-3xl lg:text-4xl text-center shrink-0 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent">
             Why People Choose us?
           </span>
           <div className="flex flex-col gap-3 flex-1 justify-center min-h-0">
-            {features.map((item) => (
-              <div key={item.title} className={featureCardClass}>
+            {features.map((item, i) => (
+              <motion.div 
+                key={item.title} 
+                className={featureCardClass}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 shrink-0">
                     <img src={item.img} alt="" className="w-full h-full object-cover" />
@@ -118,11 +192,11 @@ function Home() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <BestSeller />
     </>
