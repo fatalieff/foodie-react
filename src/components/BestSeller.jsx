@@ -1,128 +1,150 @@
 import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoods } from "../store/foodSlice";
+import { addToCart as addToCartAction } from "../store/cartSlice";
+import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
-const buyNowClass =
-  "inline-block text-white text-sm sm:text-base font-medium bg-[#F03328] rounded-[38px] py-2 sm:py-2.5 px-4 sm:px-5 cursor-pointer shrink-0 whitespace-nowrap shadow-[0_4px_14px_rgba(240,51,40,0.3)] transition-all hover:scale-105 hover:shadow-[0_6px_20px_rgba(240,51,40,0.4)] w-full sm:w-auto text-center";
-
-function BestSellerSection() {
+const BestSeller = () => {
   const dispatch = useDispatch();
-  const { items, loading, error } = useSelector((state) => state.foods);
+  const { items: foods, loading, error } = useSelector((state) => state.foods);
+  const addToCart = (food) => dispatch(addToCartAction(food));
 
   useEffect(() => {
-    dispatch(fetchFoods());
-  }, [dispatch]);
+    if (foods.length === 0) {
+      dispatch(fetchFoods());
+    }
+  }, [dispatch, foods.length]);
 
-  if (loading) {
-    return (
-      <div className="mt-12 sm:mt-[10%] text-center">
-        <p className="nunito text-base sm:text-[20px] text-[#666666] animate-pulse">
-          Loading delicious dishes...
-        </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <p className="text-[#F03328] nunito text-center mt-12 sm:mt-[10%] px-4">
-        Error: {error}
-      </p>
-    );
-  }
+  const bestSellerFoods = foods.slice(0, 4);
 
   const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
       },
     },
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
+  const fadeUpItem = {
+    hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="text-center mb-8">
+          <h2 className="font-nunito font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2d2d2d]">Our Best Sellers</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-white border border-[#f0e6de] rounded-[30px] overflow-hidden animate-pulse">
+              <div className="aspect-[4/3] bg-gray-200" />
+              <div className="p-6 space-y-4">
+                <div className="h-6 bg-gray-200 rounded-lg w-3/4" />
+                <div className="flex justify-between items-end pt-2">
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded w-12" />
+                    <div className="h-6 bg-gray-200 rounded w-20" />
+                  </div>
+                  <div className="w-12 h-12 bg-gray-200 rounded-2xl" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12 text-center">
+        <p className="text-[#F03328] font-nunito text-lg">Error loading best sellers: {error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative z-[1] mt-12 sm:mt-16 lg:mt-[10%]">
-      <motion.h1 
+    <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
+      <motion.div 
+        className="text-center mb-8 sm:mb-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-2xl sm:text-3xl lg:text-4xl font-bold font-nunito text-center px-4 bg-gradient-to-br from-[#2d2d2d] to-[#5c4033] bg-clip-text text-transparent"
+        transition={{ duration: 0.6 }}
       >
-        Our Best Seller Dishes
-      </motion.h1>
+        <h2 className="font-nunito font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2d2d2d]">Our Best Sellers</h2>
+        <p className="font-nunito text-[#666666] mt-2 max-w-2xl mx-auto">
+          Check out our most popular and delicious dishes loved by our customers!
+        </p>
+      </motion.div>
+
       <motion.div 
-        initial={{ opacity: 0, scaleX: 0 }}
-        whileInView={{ opacity: 1, scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="w-16 h-1 bg-[#F03328] mx-auto mt-2 mb-4 rounded-full"
-      ></motion.div>
-      <motion.p 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="text-sm sm:text-base lg:text-lg font-medium font-nunito text-[#5C5C5C] text-center mt-3 sm:mt-4 px-4 max-w-3xl mx-auto"
-      >
-        Our fresh garden salad is a light and refreshing option. It features a mix of
-        crisp lettuce, juicy tomatoe all tossed in your choice of dressing.
-      </motion.p>
-      <motion.div 
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-12 lg:mt-[10%]"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {items.slice(1, 7).map((item, i) => (
+        {bestSellerFoods.map((food) => (
           <motion.div
-            key={item.idMeal}
-            variants={cardVariants}
-            whileHover={{ 
-              y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            className="group w-full min-w-0 flex flex-col bg-white border border-[#f0e6de] rounded-2xl shadow-[0_2px_4px_0_#00000013] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(240,51,40,0.12)] hover:border-[rgba(255,158,12,0.25)]"
+            key={food.idMeal}
+            variants={fadeUpItem}
+            className="bg-white border border-[#f0e6de] rounded-[30px] overflow-hidden shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(240,51,40,0.12)] hover:border-[rgba(255,158,12,0.3)]"
           >
-            <div className="w-full aspect-[4/3] overflow-hidden rounded-t-2xl shrink-0">
-              <motion.img
-                src={item.strMealThumb}
-                alt={item.strMeal}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            <div className="aspect-[4/3] overflow-hidden">
+              <img 
+                src={food.strMealThumb} 
+                alt={food.strMeal} 
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
               />
             </div>
-            <div className="flex flex-col gap-3 sm:gap-4 p-4 sm:p-6 flex-1">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-3">
-                <span className="text-base sm:text-lg lg:text-xl font-nunito font-semibold text-[#2D2D2D] line-clamp-2 min-w-0">
-                  {item.strMeal}
-                </span>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <NavLink to="/Foods" className={buyNowClass}>
-                    Buy Now
-                  </NavLink>
-                </motion.div>
-              </div>
-              <div className="flex justify-between items-center gap-2 mt-auto">
-                <span className="text-xs sm:text-sm font-nunito font-semibold text-[#666666] truncate">
-                  Cuisine : {item.strArea}
-                </span>
-                <span className="font-bold text-lg sm:text-xl lg:text-2xl text-[#F03328] shrink-0">
-                  ${item.price}
-                </span>
+            <div className="p-6">
+              <h3 className="font-nunito font-bold text-lg sm:text-xl text-[#2d2d2d]">
+                {food.strMeal}
+              </h3>
+              <div className="flex justify-between items-end pt-4">
+                <div>
+                  <span className="text-xs font-nunito text-[#666666] uppercase tracking-wider">
+                    Price
+                  </span>
+                  <p className="font-nunito font-bold text-xl sm:text-2xl text-[#F03328]">
+                    ${food.price}
+                  </p>
+                </div>
+                <button
+                  onClick={() => addToCart(food)}
+                  className="w-12 h-12 bg-gradient-to-br from-[#F03328] to-[#FF9E0C] rounded-2xl flex items-center justify-center text-white shadow-[0_4px_14px_rgba(240,51,40,0.3)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(240,51,40,0.4)] hover:scale-105 active:scale-95"
+                >
+                  <i className="fa-solid fa-plus text-lg" />
+                </button>
               </div>
             </div>
           </motion.div>
         ))}
       </motion.div>
+
+      <motion.div 
+        className="text-center mt-8 sm:mt-12"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <NavLink 
+          to="/Foods"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-br from-[#F03328] to-[#FF9E0C] text-white font-nunito font-bold rounded-full shadow-[0_4px_14px_rgba(240,51,40,0.3)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(240,51,40,0.4)] hover:-translate-y-0.5"
+        >
+          View All Menu
+          <i className="fa-solid fa-arrow-right" />
+        </NavLink>
+      </motion.div>
     </div>
   );
-}
+};
 
-export default BestSellerSection;
+export default BestSeller;

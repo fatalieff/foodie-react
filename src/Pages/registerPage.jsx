@@ -15,20 +15,56 @@ const RegisterPage = () => {
     setLoading(true);
 
     try {
+      const normalizedEmail = email.trim().toLowerCase();
+      const normalizedUsername = username.trim();
+
       const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
+        email: normalizedEmail,
+        password,
         options: {
           data: {
-            username: username,
+            username: normalizedUsername,
           },
         },
       });
 
       if (error) throw error;
 
-      alert('Registration successful! You can now log in.');
-      console.log('User:', data.user);
+      if (!data.user) {
+        throw new Error('Qeydiyyat tamamlanmadı. Supabase yeni user qaytarmadı.');
+      }
+
+      // Supabase bəzi auth konfiqurasiyalarında mövcud email üçün error qaytarmaya bilər.
+      if (Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        throw new Error('Bu email artıq qeydiyyatdan keçib və ya təsdiq gözləyir.');
+      }
+
+      // User uğurlu olduqdan sonra profiles cədvəlinə əlavə edək
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: data.user.id,
+              username: normalizedUsername,
+              full_name: normalizedUsername,
+              avatar_url: null,
+            },
+          ]);
+
+        if (profileError) {
+          console.error('Profil yaradılarkən xəta:', profileError);
+          // Profile xətası vacib deyil, user yenə də login ola bilsin, lakin qeyd edək
+        }
+      }
+
+      if (!data.session) {
+        alert('Qeydiyyat sorğusu yaradıldı. Email təsdiqi aktivdirsə, gələn məktubdakı linklə hesabı təsdiqlə.');
+      } else {
+        alert('Qeydiyyat uğurla tamamlandı. İndi login ola bilərsiniz.');
+      }
+
+      console.log('Sign up result:', data);
       navigate('/login');
     } catch (error) {
       alert('Error: ' + error.message);

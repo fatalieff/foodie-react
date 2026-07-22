@@ -32,16 +32,48 @@ function Header() {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
+    // Function to ensure user has a profile
+    const ensureProfileExists = async (user) => {
+      if (!user) return;
+      
+      try {
+        // Upsert profile
+        const { error: upsertError } = await supabase
+          .from('profiles')
+          .upsert([
+            {
+              id: user.id,
+              username: user.user_metadata?.username || user.email.split('@')[0],
+              full_name: user.user_metadata?.username || user.email.split('@')[0],
+              avatar_url: null
+            }
+          ], { onConflict: 'id' });
+
+        if (upsertError) {
+          console.error('Error ensuring profile exists:', upsertError);
+        }
+      } catch (err) {
+        console.error('Error in ensureProfileExists:', err);
+      }
+    };
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        ensureProfileExists(session.user);
+      }
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        ensureProfileExists(currentUser);
+      }
     });
 
     return () => subscription.unsubscribe();
